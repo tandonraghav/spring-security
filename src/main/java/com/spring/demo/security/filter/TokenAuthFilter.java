@@ -15,7 +15,7 @@ import com.spring.demo.security.tokens.RestToken;
 
 public class TokenAuthFilter extends OncePerRequestFilter{
 
-	private static Logger logger = Logger.getLogger(TokenAuthFilter.class);
+	private static Logger logger = Logger.getLogger(TokenAuthFilter.class); 
 	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
