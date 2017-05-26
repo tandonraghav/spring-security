@@ -13,6 +13,12 @@ public class TestRestController {
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	@ResponseStatus(value=HttpStatus.CREATED)
 	public String create(){
-		return "Spring is Woring !!!";
+		return "Spring POST is Woring !!!";
+	}
+	
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	@ResponseStatus(value=HttpStatus.CREATED)
+	public String get(){
+		return "Spring GET is Woring !!!";
 	}
 }
