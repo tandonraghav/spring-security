@@ -1,44 +1,32 @@
-package com.spring.demo.rest;
+package com.spring.demo.security;
 
+import java.security.Principal;
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.session.SessionAuthenticationException;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.session.ExpiringSession;
 import org.springframework.session.FindByIndexNameSessionRepository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 
-import com.spring.demo.security.filter.TokenAuthFilterPost;
+@Component
+public class SessionAuthStrategy implements SessionAuthenticationStrategy{
 
-@RequestMapping("/test")
-@RestController
-public class TestRestController {
+	private static Logger logger = Logger.getLogger(SessionAuthStrategy.class); 
 	@Autowired FindByIndexNameSessionRepository<? extends ExpiringSession> sessionRepository;
-	private static Logger logger = Logger.getLogger(TestRestController.class); 
-	
-	@RequestMapping(value = "/post", method = RequestMethod.POST)
-	@ResponseStatus(value=HttpStatus.CREATED)
-	public String create(){
-		return "Spring POST is Woring !!!";
-	}
-	
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	@ResponseStatus(value=HttpStatus.CREATED)
-	public String get(){
-		updateSession();
-		return "Spring GET is Woring !!!";
-	}
-
-	private void updateSession() {
+	@Override
+	public void onAuthentication(Authentication authentication, HttpServletRequest request,
+			HttpServletResponse response) throws SessionAuthenticationException {
 		logger.info("Entering sessionAuthstrategy");
-		//HttpSession session=request.getSession();
+		/*HttpSession session=request.getSession();
 		String username=String.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		//Principal p=(Principal)authentication.getPrincipal();
 		logger.info("username="+username);
@@ -52,10 +40,7 @@ public class TestRestController {
 		for(ExpiringSession userSession : userSessions){
 			logger.info(userSession.getId());
 			sessionRepository.delete(userSession.getId());
-		}
+		}*/
 	}
-	
-	
-	
-	
+
 }

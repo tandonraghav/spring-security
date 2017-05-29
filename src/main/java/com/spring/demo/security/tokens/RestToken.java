@@ -7,18 +7,23 @@ import org.springframework.security.core.GrantedAuthority;
 
 public class RestToken extends AbstractAuthenticationToken{
 
-	public RestToken(Collection<? extends GrantedAuthority> authorities) {
+	private static final long serialVersionUID = 1L;
+
+	private String username;
+	
+	public RestToken(Collection<? extends GrantedAuthority> authorities,String principal) {
 		super(authorities);
+		this.username=principal;
 	}
 
 	@Override
 	public Object getCredentials() {
-		return null;
+		return Math.random();
 	}
 
 	@Override
 	public Object getPrincipal() {
-		return "raghav";
+		return username;
 	}
 
 }

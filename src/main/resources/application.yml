@@ -1,4 +1,6 @@
 server:
   port: 7654
   
-  
+security:
+  basic:
+    enabled: false
